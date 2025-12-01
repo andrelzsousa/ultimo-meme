@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### Funcionalidades implementadas:
 
-## Getting Started
+1. **Tela Inicial (Boot Sequence)**
+   - Simulação de inicialização de sistema
+   - Aviso institucional fake sobre "arquivo classificado"
+   - Campo de código de acesso (qualquer código funciona, "MEME" é easter egg)
 
-First, run the development server:
+2. **Interface de Restauração**
+   - Canvas com visualização do "meme corrompido"
+   - Botões de RESTAURAR, DESFRAGMENTAR, ANALISAR
+   - **A ironia**: restaurar na verdade CORROMPE mais o arquivo
+   - Métricas pseudocientíficas ("Ressonância Semântica Digital")
+   - Terminal com mensagens de erro absurdas
+   - Citações do Historiador aparecem periodicamente
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+3. **Easter Eggs**
+   - Código Konami (↑↑↓↓←→←→BA) ativa "Modo Arqueólogo"
+   - Digitar "MEME" na tela inicial mostra mensagem secreta
+   - Dicas sutis escondidas na interface
+
+4. **Revelação Final**
+   - Narração melancólica do Historiador
+   - O "meme" nunca é completamente revelado
+   - Apenas fragmentos: "ISSO FOI LONGE DEMAIS"
+   - Final ambíguo que questiona o espectador
+
+A ironia do design é que **você não consegue restaurar completamente** — e esse é o ponto narrativo!
+
+## A Mecânica (Intencionalmente Frustrante)
+
+No `RestorationInterface.tsx`, a lógica de restauração funciona assim:
+
+```typescript
+const change = secretMode 
+  ? Math.random() * 10 - 8 // Modo secreto: restaura de verdade
+  : Math.random() * 8 - 2;  // Modo normal: geralmente CORROMPE mais
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**No modo normal:**
+- `Math.random() * 8 - 2` produz valores entre -2 e +6
+- Como a maioria dos valores é positiva, a corrupção **aumenta** na maioria das vezes
+- O botão "RESTAURAR" é uma mentira — ele piora o arquivo
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Para realmente "restaurar":**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Ativar o Modo Arqueólogo (Easter Egg)
+Digite o **Código Konami** no teclado:
+```
+↑ ↑ ↓ ↓ ← → ← → B A
+```
 
-## Learn More
+Isso ativa o `secretMode`, onde a restauração realmente funciona (valores entre -8 e +2, geralmente negativos = menos corrupção).
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Ou Simplesmente Persistir
+Após **10+ tentativas** de restauração, o sistema detecta que você está "obcecado" como o Historiador e oferece a revelação final — independente do nível de corrupção.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```typescript
+if (corruptionLevel < 20 || restorationAttempts > 10) {
+  setShowFinalWarning(true);
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## O Propósito Narrativo
 
-## Deploy on Vercel
+A frustração é intencional. Você experimenta o que o Historiador sente: quanto mais tenta recuperar o passado, mais ele se fragmenta. O "último meme" nunca será totalmente restaurado porque:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> *"Os memes nunca foram sobre as imagens em si. Eram sobre nós."*
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+É uma metáfora sobre a impossibilidade de recuperar completamente a memória cultural digital. O final mostra apenas fragmentos: **"ISSO FOI LONGE DEMAIS"** — mas nunca o meme completo.
